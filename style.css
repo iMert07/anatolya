@@ -1,0 +1,13 @@
+.wiki-link {
+    color: #0645ad;
+    text-decoration: none;
+}
+.dark .wiki-link {
+    color: #3399cc;
+}
+.wiki-link:hover {
+    text-decoration: underline;
+}
+html {
+    scroll-behavior: smooth;
+}
