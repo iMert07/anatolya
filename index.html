@@ -1,67 +1,282 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html class="dark" lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yeni Bir Dünya</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f9f9f9;
-      margin: 0;
-      padding: 20px;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .box {
-      background: white;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: transform 0.2s;
-      text-align: center;
-    }
-
-    .box:hover {
-      transform: scale(1.02);
-    }
-
-    a {
-      text-decoration: none;
-      color: #007B8A;
-      font-size: 18px;
-      display: block;
-    }
-
-    @media (max-width: 600px) {
-      .box {
-        padding: 16px;
-        font-size: 16px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anatolya Birliği - Özgür Ansiklopedi</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Clear+Sans:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#ffffff",
+                        "background-dark": "#121820",
+                        "foreground-light": "#202122",
+                        "foreground-dark": "#eaecf0",
+                        "subtle-light": "#f8f9fa",
+                        "subtle-dark": "#1a2332",
+                        "muted-light": "#54595d",
+                        "muted-dark": "#9aa0a6",
+                        "border-light": "#a2a9b1",
+                        "border-dark": "#38444d"
+                    },
+                    fontFamily: { "display": ["Clear Sans", "sans-serif"] },
+                },
+            },
+        }
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+    <style>
+        .wiki-link {
+            color: #0645ad;
+            text-decoration: none;
+        }
+        .dark .wiki-link {
+            color: #3399cc;
+        }
+        .wiki-link:hover {
+            text-decoration: underline;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
-<body>
-  <div class="container">
-    <h2 style="text-align:center; color:#333;">Anatolya Birliği</h2>
-    <div class="box"><a href="https://1071denberi.vercel.app" target="_blank">Zaman</a></div>
-    <div class="box"><a href="https://orumdili.vercel.app" target="_blank">Sözlük</a></div>
-    <div class="box"><a href="https://cevirici.vercel.app" target="_blank">Çeviri</a></div>
-    <div class="box"><a href="https://haritamiz.vercel.app" target="_blank">Harita</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/ovdgnf8.png" target="_blank">Bayrak</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/oeji9uj.png" target="_blank">Alfabe</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/56igkow.png" target="_blank">Saat</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/phc9pr0.png" target="_blank">Takvim</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/j3fgrfn.png" target="_blank">Marş</a></div>
-    <div class="box"><a href="https://i.hizliresim.com/fsjusat.png" target="_blank">Klavye Q</a></div>
-    <div class="box"><a href="https://t.me/+nUbTj-faHDhlMTJk" target="_blank">Telegram</a></div>
-    <div class="box"><a href="https://discord.gg/PDa4D6n6" target="_blank">Discord</a></div>
+<body class="bg-background-light dark:bg-background-dark font-display text-foreground-light dark:text-foreground-dark min-h-screen flex flex-col justify-between transition-colors duration-200">
 
-  </div>
+    <!-- Üst Ansiklopedi Çubuğu -->
+    <header class="w-full border-b border-border-light/40 dark:border-border-dark/40 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="sidebar-toggle" class="lg:hidden p-2 rounded-lg hover:bg-subtle-light dark:hover:bg-subtle-dark">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary font-bold text-base">
+                        A
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-bold tracking-tight leading-none">Anatolya Birliği</h1>
+                        <span class="text-[10px] text-muted-light dark:text-muted-dark">Özgür Ansiklopedi</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Arama Çubuğu -->
+            <div class="flex-1 max-w-md mx-4 hidden sm:block">
+                <div class="relative">
+                    <input type="text" id="wiki-search" placeholder="Ansiklopedide ara..." class="w-full text-sm bg-subtle-light dark:bg-subtle-dark border border-border-light/40 dark:border-border-dark/40 rounded-full px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                    <svg class="w-4 h-4 text-muted-light dark:text-muted-dark absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle" class="p-2.5 rounded-full bg-subtle-light dark:bg-subtle-dark hover:opacity-80 transition-opacity" title="Tema Değiştir">
+                    <svg class="w-5 h-5 text-muted-light dark:text-muted-dark hidden" fill="currentColor" id="theme-toggle-dark-icon" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                    <svg class="w-5 h-5 text-muted-light dark:text-muted-dark hidden" fill="none" id="theme-toggle-light-icon" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle><line x1="12" x2="12" y1="1" y2="3"></line><line x1="12" x2="12" y1="21" y2="23"></line><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"></line><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"></line><line x1="1" x2="3" y1="12" y2="12"></line><line x1="21" x2="23" y1="12" y2="12"></line><line x1="4.22" x2="5.64" y1="19.78" y2="18.36"></line><line x1="18.36" x2="19.78" y1="5.64" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ana İçerik Yapısı (Wikipedia Düzeni) -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full flex gap-8">
+        
+        <!-- Sol Kenar Çubuğu / İçindekiler -->
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-64 bg-background-light dark:bg-background-dark lg:bg-transparent border-r lg:border-none border-border-light/40 dark:border-border-dark/40 p-6 lg:p-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 overflow-y-auto">
+            <div class="sticky top-20 space-y-6">
+                <div>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-light dark:text-muted-dark mb-3">İçindekiler</h3>
+                    <nav class="space-y-1.5 text-sm">
+                        <a href="#giris" class="block py-1 hover:text-primary transition-colors">1. Giriş</a>
+                        <a href="#tarihce" class="block py-1 hover:text-primary transition-colors">2. Tarihçe</a>
+                        <a href="#cografi" class="block py-1 hover:text-primary transition-colors">3. Coğrafya ve İklim</a>
+                        <a href="#demografi" class="block py-1 hover:text-primary transition-colors">4. Demografi ve Dil (Orum Dili)</a>
+                        <a href="#kultur" class="block py-1 hover:text-primary transition-colors">5. Kültür, Takvim ve Semboller</a>
+                        <a href="#sistemler" class="block py-1 hover:text-primary transition-colors">6. Dijital Araçlar ve Uygulamalar</a>
+                        <a href="#baglantilar" class="block py-1 hover:text-primary transition-colors">7. Topluluk ve Bağlantılar</a>
+                    </nav>
+                </div>
+
+                <div class="pt-4 border-t border-border-light/40 dark:border-border-dark/40">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-muted-light dark:text-muted-dark mb-3">Hızlı Portal</h3>
+                    <div class="flex flex-col gap-2 text-xs">
+                        <a href="https://1071denberi.vercel.app" target="_blank" class="p-2 rounded bg-subtle-light dark:bg-subtle-dark hover:border-primary border border-transparent transition-all flex items-center justify-between"><span>Zaman Sistemi</span><span>→</span></a>
+                        <a href="https://orumdili.vercel.app" target="_blank" class="p-2 rounded bg-subtle-light dark:bg-subtle-dark hover:border-primary border border-transparent transition-all flex items-center justify-between"><span>Orum Dili Sözlüğü</span><span>→</span></a>
+                        <a href="https://cevirici.vercel.app" target="_blank" class="p-2 rounded bg-subtle-light dark:bg-subtle-dark hover:border-primary border border-transparent transition-all flex items-center justify-between"><span>Çeviri Aracı</span><span>→</span></a>
+                        <a href="https://haritamiz.vercel.app" target="_blank" class="p-2 rounded bg-subtle-light dark:bg-subtle-dark hover:border-primary border border-transparent transition-all flex items-center justify-between"><span>Harita Portal</span><span>→</span></a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Arka Plan Karartması (Mobil Sidebar için) -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden"></div>
+
+        <!-- Ana Madde İçeriği -->
+        <main class="flex-1 max-w-4xl">
+            
+            <!-- Madde Başlığı ve Üst Bilgi -->
+            <div class="border-b border-border-light/40 dark:border-border-dark/40 pb-4 mb-6">
+                <h1 class="text-3xl sm:text-4xl font-serif font-bold tracking-tight mb-2">Anatolya Birliği</h1>
+                <p class="text-xs text-muted-light dark:text-muted-dark">Vikipedi, özgür kurgusal ansiklopedi</p>
+            </div>
+
+            <!-- Sağ Taraf Bilgi Kutusu (Infobox) -->
+            <div class="float-none sm:float-right sm:ml-6 sm:mb-6 w-full sm:w-80 bg-subtle-light dark:bg-subtle-dark border border-border-light/50 dark:border-border-dark/50 rounded-lg p-4 shadow-sm text-sm">
+                <h3 class="text-center font-bold text-base mb-3 pb-2 border-b border-border-light/30 dark:border-border-dark/30">Anatolya Birliği</h3>
+                <div class="flex justify-center mb-3">
+                    <img src="https://i.hizliresim.com/ovdgnf8.png" alt="Bayrak" class="w-48 h-auto rounded shadow-sm border border-border-light/30 dark:border-border-dark/30 object-cover" onerror="this.src='https://placehold.co/200x120/1193d4/ffffff?text=Bayrak'">
+                </div>
+                <p class="text-center text-xs text-muted-light dark:text-muted-dark mb-4">Devletin Resmi Bayrağı</p>
+                
+                <div class="space-y-2 text-xs">
+                    <div class="flex justify-between py-1 border-b border-border-light/20 dark:border-border-dark/20"><span class="font-semibold">Kuruluş:</span> <span>1071 (Ezoterik)</span></div>
+                    <div class="flex justify-between py-1 border-b border-border-light/20 dark:border-border-dark/20"><span class="font-semibold">Resmi Dil:</span> <a href="#demografi" class="wiki-link">Orum Dili</a></div>
+                    <div class="flex justify-between py-1 border-b border-border-light/20 dark:border-border-dark/20"><span class="font-semibold">Başkent:</span> <span>Anatolia</span></div>
+                    <div class="flex justify-between py-1 border-b border-border-light/20 dark:border-border-dark/20"><span class="font-semibold">Resmi Yazı:</span> <a href="https://i.hizliresim.com/oeji9uj.png" target="_blank" class="wiki-link">Özel Alfabe</a></div>
+                    <div class="flex justify-between py-1 border-b border-border-light/20 dark:border-border-dark/20"><span class="font-semibold">Milli Marş:</span> <a href="https://i.hizliresim.com/j3fgrfn.png" target="_blank" class="wiki-link">Anatolya Marşı</a></div>
+                    <div class="flex justify-between py-1"><span class="font-semibold">Saat/Takvim:</span> <span>Özel Kronolojik Sistem</span></div>
+                </div>
+            </div>
+
+            <!-- Bölüm 1: Giriş -->
+            <section id="giris" class="mb-8 font-serif leading-relaxed space-y-4">
+                <p>
+                    <b>Anatolya Birliği</b>, Anadolu Türkçesinin köklerine bağlı kalınarak zenginleştirilmesi, özleştirilmesi ve alternatif bir kültürel/coğrafi vizyonla yeniden tasarlanması amacıyla kurulan kurgusal bir devlet ve topluluk projesidir. Geleneksel değerleri modern dijital altyapılarla harmanlayan bu üst yapı; kendine has dili, takvimi, haritaları ve felsefi duruşuyla özgün bir dünya inşa etmeyi hedefler.
+                </p>
+            </section>
+
+            <!-- Bölüm 2: Tarihçe -->
+            <section id="tarihce" class="mb-8">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Tarihçe</h2>
+                <p class="font-serif leading-relaxed mb-3">
+                    Projenin kökleri tarihin dönüm noktası kabul edilen <a href="https://1071denberi.vercel.app" target="_blank" class="wiki-link">1071</a> yılına dayanır. Anadolu coğrafyasındaki kültürel birikimin yeniden yorumlanması ve ortak bir bilinç altında toplanması fikriyle dijital dünyada filizlenmiştir. Zaman içinde genişleyen topluluk kanalları ve kültürel araçlarla yaşayan bir simülasyon evrenine dönüşmüştür.
+                </p>
+            </section>
+
+            <!-- Bölüm 3: Coğrafya -->
+            <section id="cografi" class="mb-8">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Coğrafya ve İklim</h2>
+                <p class="font-serif leading-relaxed mb-3">
+                    Anatolya Birliği toprakları, antik medeniyetlerin geçiş yolları üzerinde yer alır. Detaylı topoğrafik ve stratejik yerleşim planlarına <a href="https://haritamiz.vercel.app" target="_blank" class="wiki-link">Harita Portalı</a> üzerinden erişilebilmektedir. Bölge, stratejik konumu ve çeşitli iklim kuşaklarıyla kendine yeterli bir ekosistem sunar.
+                </p>
+            </section>
+
+            <!-- Bölüm 4: Demografi ve Dil -->
+            <section id="demografi" class="mb-8">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Demografi ve Dil (Orum Dili)</h2>
+                <p class="font-serif leading-relaxed mb-3">
+                    Birlik halkının ana iletişim aracı olan <b>Orum Dili</b>; Anadolu Türkçesinin özleştirilmesi, kolaylaştırılması ve Azerbaycan Türkçesinden esintilerle zenginleştirilmiş yapay bir dildir. Dilin köken dağılımını, kelime hazinesini ve detaylı sözlüğünü <a href="https://orumdili.vercel.app" target="_blank" class="wiki-link">Orum Dili Sözlüğü</a> aracılığıyla incelemek mümkündür. Ayrıca diller arası köprü kurmak amacıyla geliştirilen <a href="https://cevirici.vercel.app" target="_blank" class="wiki-link">Çeviri Uygulaması</a> aktif olarak kullanılmaktadır.
+                </p>
+            </section>
+
+            <!-- Bölüm 5: Kültür -->
+            <section id="kultur" class="mb-8">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Kültür, Takvim ve Semboller</h2>
+                <p class="font-serif leading-relaxed mb-3">
+                    Kültürel yaşam, geleneksel ile modernin sentezidir. Devletin resmi unsurları görsel arşivlerde saklanmaktadır:
+                </p>
+                <ul class="list-disc list-inside space-y-1 font-serif ml-4">
+                    <li><a href="https://i.hizliresim.com/oeji9uj.png" target="_blank" class="wiki-link">Özel Alfabe Tablosu</a></li>
+                    <li><a href="https://i.hizliresim.com/56igkow.png" target="_blank" class="wiki-link">Anatolya Saat Sistemi</a></li>
+                    <li><a href="https://i.hizliresim.com/phc9pr0.png" target="_blank" class="wiki-link">Özel Takvim Tasarımı</a></li>
+                    <li><a href="https://i.hizliresim.com/j3fgrfn.png" target="_blank" class="wiki-link">Milli Marş Notasyonları</a></li>
+                    <li><a href="https://i.hizliresim.com/fsjusat.png" target="_blank" class="wiki-link">Q Klavye Düzeni</a></li>
+                </ul>
+            </section>
+
+            <!-- Bölüm 6: Dijital Araçlar -->
+            <section id="sistemler" class="mb-8">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Dijital Araçlar ve Sistemler</h2>
+                <p class="font-serif leading-relaxed">
+                    Ülkenin işleyişi tamamen dijital ekosisteme entegre edilmiştir. Zaman akışı <a href="https://1071denberi.vercel.app" target="_blank" class="wiki-link">Zaman Sayacı</a> ile takip edilirken, günlük işler özelleştirilmiş yazılımlarla yürütülmektedir.
+                </p>
+            </section>
+
+            <!-- Bölüm 7: Bağlantılar -->
+            <section id="baglantilar" class="mb-16">
+                <h2 class="text-2xl font-serif font-bold border-b border-border-light/40 dark:border-border-dark/40 pb-1 mb-3">Topluluk ve İletişim</h2>
+                <p class="font-serif leading-relaxed mb-3">
+                    Anatolya Birliği vatandaşları ve katılımcıları resmi iletişim kanallarında bir araya gelmektedir:
+                </p>
+                <div class="flex gap-4 font-serif">
+                    <a href="https://t.me/+nUbTj-faHDhlMTJk" target="_blank" class="wiki-link font-semibold">Telegram Kanalı</a>
+                    <span>•</span>
+                    <a href="https://discord.gg/PDa4D6n6" target="_blank" class="wiki-link font-semibold">Discord Sunucusu</a>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Ansiklopedi Alt Bilgisi -->
+    <footer class="w-full py-8 text-center text-xs text-muted-light dark:text-muted-dark border-t border-border-light/40 dark:border-border-dark/40 bg-subtle-light/30 dark:bg-subtle-dark/30">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>Bu sayfa son olarak 21 Ağustos 2026 tarihinde güncellenmiştir.</p>
+            <p>&copy; Anatolya Birliği Özgür Ansiklopedisi. Tüm kurgusal hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Etkileşim Scriptleri -->
+    <script>
+        // Tema Değiştirici
+        function updateThemeIcons() {
+            const isDark = document.documentElement.classList.contains('dark');
+            document.getElementById('theme-toggle-dark-icon')?.classList.toggle('hidden', isDark);
+            document.getElementById('theme-toggle-light-icon')?.classList.toggle('hidden', !isDark);
+        }
+
+        document.getElementById('theme-toggle')?.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('color-theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+            updateThemeIcons();
+        });
+        updateThemeIcons();
+
+        // Mobil Kenar Çubuğu Açma/Kapama
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const toggleBtn = document.getElementById('sidebar-toggle');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        }
+
+        toggleBtn?.addEventListener('click', toggleSidebar);
+        overlay?.addEventListener('click', toggleSidebar);
+
+        // Arama İşlevi (Sayfa içi bölümleri bulma)
+        const searchInput = document.getElementById('wiki-search');
+        searchInput?.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase().trim();
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(sec => {
+                if(term === '') {
+                    sec.style.opacity = '1';
+                    return;
+                }
+                const text = sec.innerText.toLowerCase();
+                if(text.includes(term)) {
+                    sec.style.opacity = '1';
+                } else {
+                    sec.style.opacity = '0.3';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
